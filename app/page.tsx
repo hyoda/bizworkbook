@@ -237,7 +237,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold">🚀 비즈니스를 실행으로 옮길 준비가 되었나요?</h2>
         <p className="mt-4 text-lg">지금 바로 시작하세요!</p>
         <Button asChild size="lg" className="mt-6 bg-white text-primary shadow-md hover:bg-gray-200">
-          <Link href="/signup">무료 체험하기</Link>
+          <Link href="/auth">무료 체험하기</Link>
         </Button>
       </section>
     </main>
