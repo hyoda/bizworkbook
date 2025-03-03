@@ -15,7 +15,7 @@ const pricingPlans = [
       "1개 프로젝트 제한",
     ],
     cta: "무료로 시작하기",
-    link: "/signup",
+    link: "/workbook",
   },
   {
     title: "프리미엄 플랜",
@@ -27,7 +27,7 @@ const pricingPlans = [
       "3개 프로젝트 제한",
     ],
     cta: "프리미엄 구독하기",
-    link: "/signup",
+    link: "/workbook",
   },
   {
     title: "비즈니스 플랜",
@@ -39,7 +39,7 @@ const pricingPlans = [
       "무제한 프로젝트",
     ],
     cta: "비즈니스 신청하기",
-    link: "/contact",
+    link: "/workbook",
   },
 ];
 
