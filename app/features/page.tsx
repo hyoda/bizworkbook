@@ -42,7 +42,7 @@ export default function FeaturesPage() {
     <main className="min-h-screen bg-background text-foreground">
       <section className="py-20 text-center bg-primary text-primary-foreground">
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-          📌 DevmineLab 기능 소개
+          📌 devminelab 기능 소개
         </h1>
         <p className="mt-4 text-lg max-w-2xl mx-auto leading-relaxed">
           비즈니스 관리에 필요한 모든 도구를 한 곳에서 제공합니다.

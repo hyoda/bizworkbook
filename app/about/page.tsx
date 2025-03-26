@@ -65,7 +65,7 @@ export default function AboutPage() {
               </p>
               <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
                 AI를 제대로 활용하는 순간, 당신은 더 이상 시간과 비용의 제한을 받지 않습니다.  
-                <strong>DevmineLab</strong>은 <strong>AI를 통해 성장할 수 있도록, 가장 효율적인 도구를 제공합니다.</strong>
+                <strong>devminelab</strong>은 <strong>AI를 통해 성장할 수 있도록, 가장 효율적인 도구를 제공합니다.</strong>
               </p>
               <Button asChild className="mt-8">
                 <Link href="/contact">

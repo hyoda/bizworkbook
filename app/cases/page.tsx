@@ -95,7 +95,7 @@ export default function CasesPage() {
     <>
       {/* ✅ next/head를 사용하여 <title> 추가 */}
       <Head>
-        <title>실전 사례 모음 | DevmineLab</title>
+        <title>실전 사례 모음 | devminelab</title>
       </Head>
 
       {/* Hero Section */}
@@ -159,7 +159,7 @@ export default function CasesPage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-4">더 많은 사례가 필요하신가요?</h2>
           <p className="text-muted-foreground mb-8">
-            DevmineLab과 함께 성공적인 비즈니스 솔루션을 만들어보세요.
+            devminelab과 함께 성공적인 비즈니스 솔루션을 만들어보세요.
           </p>
           <Link
             href="/contact"

@@ -62,7 +62,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center py-20 bg-gradient-to-b from-primary to-muted text-primary-foreground">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-          🚀 실행 중심의 비즈니스 자동화, DevmineLab
+          🚀 실행 중심의 비즈니스 자동화, devminelab
         </h1>
         <p className="mt-4 text-lg max-w-2xl leading-relaxed">
           단순한 이론이 아닌, 실전에서 검증된 자동화 시스템을 제공합니다. <br/> 
@@ -114,7 +114,7 @@ export default function Home() {
       {/* 주요 기능 소개 */}
       <section className="max-w-5xl mx-auto py-16 px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="space-y-6">
-          <h2 className="text-3xl font-bold tracking-tighter">📌 DevmineLab이 특별한 이유</h2>
+          <h2 className="text-3xl font-bold tracking-tighter">📌 devminelab이 특별한 이유</h2>
           <ul className="list-disc pl-6 text-lg space-y-2 text-muted-foreground">
             <li>✅ 단계별 비즈니스 로드맵 제공</li>
             <li>✅ AI 기반 맞춤형 추천</li>

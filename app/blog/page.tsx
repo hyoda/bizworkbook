@@ -68,7 +68,7 @@ const blogPosts = [
   },
   {
     id: "11",
-    title: "DevMineLab의 기술 투자 모델: IT 솔루션으로 성장 극대화",
+    title: "devminelab의 기술 투자 모델: IT 솔루션으로 성장 극대화",
     excerpt: "IT 솔루션을 기반으로 스타트업 및 소규모 사업과 협력하는 기술 투자 모델 소개",
     slug: "tech-investment-model"
   },
