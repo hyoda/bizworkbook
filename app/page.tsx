@@ -10,19 +10,19 @@ import { Button } from "@/components/ui/button";
 import { Users, Lightbulb, ShoppingCart, Briefcase } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Line } from "recharts";
 
 import { Tooltip as RechartsTooltip } from "recharts";
 import { User } from "@supabase/supabase-js";
 
 
 const data = [
-  { name: "1월", 매출: 12000000, 비용: 800000 },
-  { name: "2월", 매출: 15000000, 비용: 900000 },
-  { name: "3월", 매출: 18000000, 비용: 1200000 },
-  { name: "4월", 매출: 22000000, 비용: 1400000 },
-  { name: "5월", 매출: 26000000, 비용: 1600000 },
-  { name: "6월", 매출: 27600000, 비용: 1204000 },
+  { name: "7월", 매출: 15000000, 비용: 800000, 고객수: 120 },
+  { name: "8월", 매출: 18000000, 비용: 900000, 고객수: 150 },
+  { name: "9월", 매출: 22000000, 비용: 1200000, 고객수: 180 },
+  { name: "10월", 매출: 25000000, 비용: 1400000, 고객수: 220 },
+  { name: "11월", 매출: 28000000, 비용: 1600000, 고객수: 260 },
+  { name: "12월", 매출: 32000000, 비용: 1800000, 고객수: 300 },
 ];
 
 const userTypes = [
@@ -183,7 +183,7 @@ export default function Home() {
 
 
       {/* 사용자 리뷰 */}
-      <section className="bg-muted py-16">
+      {/* <section className="bg-muted py-16">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center tracking-tight">💬 사용자 리뷰 & 피드백</h2>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -206,28 +206,47 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Dashboard Preview Section */}
       <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold tracking-tighter text-center mb-8">
-            데이터 기반 인사이트
+            📊 2024년 비즈니스 성장 지표
           </h2>
           <Card className="shadow-lg">
             <CardHeader>
-              <CardTitle>비즈니스 대시보드</CardTitle>
-              <CardDescription>최근 6개월 매출 및 비용 추이</CardDescription>
+              <CardTitle>실시간 비즈니스 대시보드</CardTitle>
+              <CardDescription>최근 6개월 매출, 비용, 고객 수 추이</CardDescription>
             </CardHeader>
             <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="bg-primary/10 p-4 rounded-lg">
+                  <h3 className="text-sm font-medium text-primary">총 매출</h3>
+                  <p className="text-2xl font-bold">₩1.4억</p>
+                  <p className="text-sm text-muted-foreground">전년 대비 +45%</p>
+                </div>
+                <div className="bg-primary/10 p-4 rounded-lg">
+                  <h3 className="text-sm font-medium text-primary">총 고객수</h3>
+                  <p className="text-2xl font-bold">1,230명</p>
+                  <p className="text-sm text-muted-foreground">전년 대비 +62%</p>
+                </div>
+                <div className="bg-primary/10 p-4 rounded-lg">
+                  <h3 className="text-sm font-medium text-primary">평균 구매금액</h3>
+                  <p className="text-2xl font-bold">₩113,821</p>
+                  <p className="text-sm text-muted-foreground">전년 대비 +15%</p>
+                </div>
+              </div>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={data} margin={{ left: 30 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
-                  <YAxis tickFormatter={(value) => value.toLocaleString()}/>
+                  <YAxis yAxisId="left" tickFormatter={(value) => value.toLocaleString()}/>
+                  <YAxis yAxisId="right" orientation="right" tickFormatter={(value) => value.toLocaleString()}/>
                   <RechartsTooltip />
-                  <Bar dataKey="매출" fill="rgba(29, 78, 216, 0.7)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="비용" fill="rgba(232, 144, 97, 0.7)" radius={[4, 4, 0, 0]} />
+                  <Bar yAxisId="left" dataKey="매출" fill="rgba(29, 78, 216, 0.7)" radius={[4, 4, 0, 0]} />
+                  <Bar yAxisId="left" dataKey="비용" fill="rgba(232, 144, 97, 0.7)" radius={[4, 4, 0, 0]} />
+                  <Line yAxisId="right" type="monotone" dataKey="고객수" stroke="rgba(16, 185, 129, 0.7)" strokeWidth={2} dot={{ fill: "rgba(16, 185, 129, 0.7)" }} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>

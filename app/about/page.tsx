@@ -122,7 +122,7 @@ export default function AboutPage() {
         </div>
       </section>
       
-      <section className="text-center py-16">
+      {/* <section className="text-center py-16">
         <h2 className="text-3xl font-bold">🚀 더 알아보고 싶으신가요?</h2>
         <p className="mt-4 text-lg text-muted-foreground">
           우리의 철학을 직접 경험해보세요.
@@ -130,7 +130,7 @@ export default function AboutPage() {
         <Button asChild size="lg" className="mt-6">
           <Link href="/workbook">무료 체험하기</Link>
         </Button>
-      </section>
+      </section> */}
     </div>
   );
 }
