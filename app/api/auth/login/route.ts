@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
   try {
@@ -29,9 +28,10 @@ export async function POST(request: Request) {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "로그인 처리 중 오류가 발생했습니다.";
     return NextResponse.json(
-      { error: "로그인 처리 중 오류가 발생했습니다." },
+      { error: errorMessage },
       { status: 500 }
     );
   }
