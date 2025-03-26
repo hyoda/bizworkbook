@@ -4,30 +4,73 @@ import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Components } from 'react-markdown';
 
 const caseStudies = [
   {
     title: "쿠팡 상품 자동 등록 시스템",
     description: "Puppeteer를 활용한 자동화 사례",
+    videoUrl: "https://youtu.be/PXGjLKk73n4",
     details: `
-## **문제점**
-쿠팡에 상품을 등록할 때, 수작업으로 입력해야 하는 번거로움과 시간이 소요됨.  
-잘못된 입력이 발생하면 수정 과정이 복잡하고, 수많은 상품을 효율적으로 관리하기 어려움.
+## **프로젝트 개요**
 
-## **솔루션**
-Puppeteer를 활용하여 자동으로 상품을 등록하고, 반복 작업을 최소화하는 시스템을 구축함.
+쿠팡 상품 자동 등록 시스템은 Puppeteer를 활용하여 반복적인 상품 등록 작업을 자동화하는 프로젝트입니다.  
+이를 통해 수작업의 번거로움을 줄이고, 상품 등록 속도를 대폭 향상시켰습니다.
 
-## **핵심 기술**
-- Puppeteer  
-- Node.js  
-- MongoDB  
-- 쿠팡 Wing API  
+## **주요 기능**
 
-## **결과**
+- **자동 로그인**: 쿠팡 Wing에 자동 로그인하여 상품 등록 작업을 수행합니다.
+- **상품 등록 자동화**: 상품 정보(제목, 가격, 옵션, 이미지 등)를 자동으로 입력하여 등록합니다.
+- **오류 감지 및 수정**: 잘못된 입력을 방지하고, 사전 검증을 통해 오류를 최소화합니다.
+- **등록 속도 최적화**: 다수의 상품을 동시에 등록할 수 있도록 최적화된 프로세스를 제공합니다.
+
+## **활용 가이드**
+
+### 1. 프로젝트 실행 방법
+
+#### **환경 설정**
+\`\`\`bash
+# 프로젝트 클론
+git clone https://github.com/your-repo/coupang-auto-listing.git
+cd coupang-auto-listing
+
+# 의존성 설치
+npm install
+\`\`\`
+
+#### **환경 변수 설정**
+\`dotenv\`를 사용하여 필요한 환경 변수를 설정합니다.
+
+\`\`\`env
+COUPANG_ID=your_id
+COUPANG_PASSWORD=your_password
+\`\`\`
+
+#### **프로그램 실행**
+\`\`\`bash
+npm start
+\`\`\`
+
+### 2. 주요 기술 스택
+
+- **Puppeteer**: 웹 자동화를 위한 크롤링 및 스크래핑
+- **Node.js**: 백엔드 서비스 및 작업 스케줄링
+- **MongoDB**: 상품 데이터 저장 및 관리
+- **쿠팡 Wing API**: 상품 등록 및 관리
+
+## **프로젝트 결과 및 성과**
+
 ✅ 상품 등록 속도 **80% 향상**  
 ✅ 수작업 오류 **90% 감소**  
 ✅ 등록 프로세스의 효율성 증대
+
+## **마무리**
+
+본 프로젝트를 활용하면 쿠팡에 다량의 상품을 손쉽게 등록하고, 반복 작업을 최소화할 수 있습니다.  
+지속적인 개선을 통해 더욱 효율적인 상품 관리가 가능하도록 업데이트할 예정입니다.
     `,
   },
   {
@@ -82,7 +125,6 @@ export default function CaseDetailPage() {
   const caseIndex = parseInt(id as string, 10);
   const caseItem = caseStudies[caseIndex];
 
-  // 존재하지 않는 ID 예외 처리
   if (!caseItem) {
     return (
       <main className="max-w-3xl mx-auto py-16 px-6 text-center">
@@ -95,22 +137,83 @@ export default function CaseDetailPage() {
     );
   }
 
+  const components: Components = {
+    code({ className, children }) {
+      const match = /language-(\w+)/.exec(className || '');
+      return match ? (
+        <div className="my-4 rounded-lg overflow-hidden">
+          <SyntaxHighlighter
+            style={vscDarkPlus}
+            language={match[1]}
+            PreTag="div"
+            customStyle={{
+              margin: 0,
+              borderRadius: '0.5rem',
+            }}
+          >
+            {String(children).replace(/\n$/, '')}
+          </SyntaxHighlighter>
+        </div>
+      ) : (
+        <code className={className}>
+          {children}
+        </code>
+      );
+    },
+  };
+
   return (
-    <main className="max-w-3xl mx-auto py-16 px-6">
+    <main className="max-w-4xl mx-auto py-16 px-6">
+      {/* Hero Section */}
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4">{caseItem.title}</h1>
+        <p className="text-xl text-muted-foreground">{caseItem.description}</p>
+      </div>
+
+      {/* Video Section */}
+      {caseItem.videoUrl && (
+        <div className="mb-12">
+          <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg">
+            {/* <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube.com/embed/${caseItem.videoUrl.split('v=')[1]}`}
+              title="Project Demo Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            /> */}
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/PXGjLKk73n4?si=vG5GNjDJWAd2xPXO"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Content Section */}
       <Card className="shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-3xl">{caseItem.title}</CardTitle>
-          <p className="text-muted-foreground">{caseItem.description}</p>
-        </CardHeader>
-        <CardContent>
-          <div className="prose prose-lg text-gray-800 leading-relaxed">
-            <ReactMarkdown>{caseItem.details}</ReactMarkdown>
+        <CardContent className="p-8">
+          <div className="prose prose-lg max-w-none text-gray-800 dark:text-gray-200 leading-relaxed">
+            <ReactMarkdown components={components}>
+              {caseItem.details}
+            </ReactMarkdown>
           </div>
         </CardContent>
       </Card>
+
+      {/* Back Button */}
       <div className="mt-8 text-center">
-        <Button asChild>
-          <Link href="/cases">🔙 사례 목록으로 돌아가기</Link>
+        <Button asChild variant="outline" className="group">
+          <Link href="/cases">
+            <span className="inline-block transition-transform group-hover:-translate-x-1 mr-2">
+              ←
+            </span>
+            사례 목록으로 돌아가기
+          </Link>
         </Button>
       </div>
     </main>

@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   // 현재 워크북을 제외하고 동일한 태그를 가진 워크북 검색
   const recommendations = await db

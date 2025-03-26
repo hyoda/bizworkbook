@@ -8,7 +8,7 @@ export async function GET() {
 
   const client = await clientPromise;
   if (!client) return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
   const notifications = await db
     .collection('user_notifications')
     .find({ user_id: userId, is_read: false })
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
   const client = await clientPromise;
   if (!client) return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   await db.collection('user_notifications').insertOne({
     user_id,
@@ -42,7 +42,7 @@ export async function PUT() {
 
   const client = await clientPromise;
   if (!client) return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   await db.collection('user_notifications').updateMany(
     { user_id: userId, is_read: false },

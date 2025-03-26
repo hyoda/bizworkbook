@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   const query: { title?: { $regex: string, $options: string }, tags?: string } = {};
 
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     if (!client) {
       return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
     }
-    const db = client.db('bizworkbook');
+    const db = client.db("devminelab");
 
     // 동일한 slug가 존재하는지 확인 후 업데이트 or 삽입
     const result = await db.collection('workbooks').updateOne(
@@ -74,7 +74,7 @@ export async function PUT(req: Request) {
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   const result = await db.collection('workbooks').updateOne(
     { _id: id },
@@ -90,7 +90,7 @@ export async function DELETE(req: Request) {
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   const result = await db.collection('workbooks').deleteOne({ _id: id });
 

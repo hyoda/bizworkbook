@@ -51,7 +51,7 @@ export default function PricingPage() {
           💰 가격 정책
         </h1>
         <p className="mt-4 text-lg max-w-2xl mx-auto leading-relaxed">
-          BizWorkbook의 다양한 플랜을 확인하고, 비즈니스에 맞는 옵션을 선택하세요.
+          DevmineLab의 다양한 플랜을 확인하고, 비즈니스에 맞는 옵션을 선택하세요.
         </p>
       </section>
 

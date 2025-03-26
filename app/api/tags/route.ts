@@ -7,7 +7,7 @@ export async function GET() {
     if (!client) {
       return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
     }
-    const db = client.db('bizworkbook');
+    const db = client.db("devminelab");
     const tags = await db.collection('tags').find().toArray();
 
     return NextResponse.json(tags);

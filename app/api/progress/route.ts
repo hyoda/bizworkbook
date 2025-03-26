@@ -13,7 +13,7 @@ export async function GET(req: Request) {
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
   const progress = await db.collection('user_progress').findOne({ user_id: userId, workbook_id: workbookId });
 
   return NextResponse.json(progress || { completed_steps: [] });
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     if (!client) {
       return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
     }
-    const db = client.db('bizworkbook');
+    const db = client.db("devminelab");
 
     const progress = await db.collection('progress').findOne({ workbook_id });
 

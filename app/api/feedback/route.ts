@@ -14,7 +14,7 @@ export async function GET(req: Request) {
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
   const feedbacks = await db.collection('user_feedback').find({ workbook_id: workbookId }).toArray();
 
   return NextResponse.json(feedbacks);
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   await db.collection('user_feedback').insertOne({
     user_id: userId,

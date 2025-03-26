@@ -5,7 +5,7 @@ export async function getWorkbooks() {
   if (!client) {
     return [];
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
   return db.collection('workbooks').find({}).toArray();
 }
 
@@ -15,7 +15,7 @@ export async function createWorkbook(title: string, description: string, steps: 
   ) {
     return;
   }
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
   return db.collection('workbooks').insertOne({
     title,
     description,

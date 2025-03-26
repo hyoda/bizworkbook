@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ id: str
     if (!client) {
       return NextResponse.json({ error: '데이터베이스 클라이언트를 가져올 수 없습니다.' }, { status: 500 });
     }
-    const db = client.db('bizworkbook');
+    const db = client.db("devminelab");
     const workbook = await db.collection('workbooks').findOne({ _id: new ObjectId(id) });
 
     if (!workbook) {

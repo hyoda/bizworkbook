@@ -32,17 +32,17 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white shadow-md dark:bg-gray-900">
-      <div className="container flex h-16 max-w-screen-2xl items-center px-4 md:px-6">
+      <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 md:px-6">
         {/* 로고 */}
-        <div className="flex items-center gap-2 mr-4">
+        <div className="flex items-center gap-2">
           <Briefcase className="h-6 w-6 text-primary" />
           <Link href="/" className="text-xl font-bold tracking-tight text-primary">
-            BizWorkbook
+            DevmineLab
           </Link>
         </div>
 
         {/* 데스크탑 네비게이션 */}
-        <nav className="hidden md:flex flex-1 items-center justify-between">
+        <nav className="hidden md:flex items-center">
           <div className="flex items-center gap-6 text-sm">
             <Link href="/" className="hover:text-primary transition-colors flex items-center gap-1">
               <Home className="h-4 w-4" /> 홈
@@ -63,22 +63,22 @@ export default function Navbar() {
               <Layout className="h-4 w-4" /> 워크북
             </Link>
           </div>
-
-          {/* 로그인 / 마이페이지 */}
-          <div className="flex items-center gap-4">
-            {user ? (
-              <Link href="/mypage" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
-                <UserICon className="h-4 w-4" />
-                마이페이지
-              </Link>
-            ) : (
-              <Link href="/auth" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
-                <LogIn className="h-4 w-4" />
-                로그인
-              </Link>
-            )}
-          </div>
         </nav>
+
+        {/* 로그인/마이페이지 버튼 */}
+        <div className="flex items-center">
+          {user ? (
+            <Link href="/mypage" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
+              <UserICon className="h-4 w-4" />
+              마이페이지
+            </Link>
+          ) : (
+            <Link href="/auth" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
+              <LogIn className="h-4 w-4" />
+              로그인
+            </Link>
+          )}
+        </div>
 
         {/* 모바일 메뉴 버튼 */}
         <div className="flex md:hidden flex-1 justify-end">

@@ -8,7 +8,7 @@ export async function GET() {
 
   const client = await clientPromise;
   if (!client) return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
-  const db = client.db('bizworkbook');
+  const db = client.db('devminelab');
   const favorites = await db.collection('user_favorites').find({ user_id: userId }).toArray();
 
   return NextResponse.json(favorites);
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   const client = await clientPromise;
   if (!client) return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
 
-  const db = client.db('bizworkbook');
+  const db = client.db("devminelab");
 
   // 이미 즐겨찾기한 워크북인지 확인
   const existingFavorite = await db.collection('user_favorites').findOne({ user_id: userId, workbook_id });
