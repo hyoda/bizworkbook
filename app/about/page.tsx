@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BrainCircuit, Users, Lightbulb, Rocket, Globe, Code, TrendingUp, Target } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 // 핵심 가치 리스트
 const values = [
@@ -75,7 +76,15 @@ export default function AboutPage() {
               </Button>
             </div>
             <div className="relative h-[450px] rounded-lg overflow-hidden shadow-lg">
-              <img src="/nomad.png" alt="AI 기반 비즈니스" className="object-cover w-full h-full" />
+              <Image 
+                src="/nomad.png" 
+                alt="AI 기반 비즈니스" 
+                width={800}
+                height={450}
+                priority
+                style={{ width: '100%', height: 'auto' }}
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
