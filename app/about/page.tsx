@@ -48,7 +48,7 @@ export default function AboutPage() {
           AI 기반 자영업의 시대를 엽니다
         </h1>
         <p className="mx-auto max-w-2xl text-lg md:text-xl mt-6">
-          누구나 AI를 활용해 비즈니스를 운영하고, 글로벌 시장을 향해 확장할 수 있는 시대입니다.
+          누구나 AI를 활용해 비즈니스를 운영하고, 글로벌 시장을 향해 나갈 수 있는 시대입니다.
         </p>
       </section>
 

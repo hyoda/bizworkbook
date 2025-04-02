@@ -45,22 +45,22 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center">
           <div className="flex items-center gap-6 text-sm">
             <Link href="/" className="hover:text-primary transition-colors flex items-center gap-1">
-              <Home className="h-4 w-4" /> 홈
+              <Home className="h-4 w-4" /> Home
             </Link>
             <Link href="/about" className="hover:text-primary transition-colors flex items-center gap-1">
-              <Lightbulb className="h-4 w-4" /> 철학
+              <Lightbulb className="h-4 w-4" /> About
             </Link>
             <Link href="/how-we-work" className="hover:text-primary transition-colors flex items-center gap-1">
-              <ClipboardList className="h-4 w-4" /> 방법론
+              <ClipboardList className="h-4 w-4" /> Services
             </Link>
             <Link href="/case-studies" className="hover:text-primary transition-colors flex items-center gap-1">
-              <FileText className="h-4 w-4" /> 케이스 스터디
+              <FileText className="h-4 w-4" /> Portfolio
             </Link>
             <Link href="/blog" className="hover:text-primary transition-colors flex items-center gap-1">
-              <BookOpen className="h-4 w-4" /> 블로그
+              <BookOpen className="h-4 w-4" /> Blog
             </Link>
-            <Link href="/workbook" className="hover:text-primary transition-colors flex items-center gap-1">
-              <Layout className="h-4 w-4" /> 워크북
+            <Link href="/contact" className="hover:text-primary transition-colors flex items-center gap-1">
+              <Layout className="h-4 w-4" /> Contact
             </Link>
           </div>
         </nav>
@@ -70,12 +70,12 @@ export default function Navbar() {
           {user ? (
             <Link href="/mypage" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
               <UserICon className="h-4 w-4" />
-              마이페이지
+              Mypage
             </Link>
           ) : (
             <Link href="/auth" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
               <LogIn className="h-4 w-4" />
-              로그인
+              Login
             </Link>
           )}
         </div>
