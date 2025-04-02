@@ -83,7 +83,7 @@ export default function Home() {
           반복적인 업무를 최소화하고, 검증된 마케팅 퍼널과 자동화 시스템을 통해
           비즈니스를 성장시킵니다.
         </p>
-        <ul className="list-disc pl-6 text-lg space-y-2 text-muted-foreground mt-4">
+        <ul className=" pl-6 text-lg space-y-2 text-muted-foreground mt-4">
           <li>✅ 실행 가능한 비즈니스 자동화 솔루션 제공</li>
           <li>✅ 반복적인 업무를 최소화하는 효율적인 시스템</li>
           <li>✅ 검증된 마케팅 퍼널을 활용한 성장 전략</li>
@@ -119,7 +119,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold tracking-tighter">
             📌 devminelab이 특별한 이유
           </h2>
-          <ul className="list-disc pl-6 text-lg space-y-2 text-muted-foreground">
+          <ul className="pl-6 text-lg space-y-2 text-muted-foreground">
             <li>✅ 단계별 비즈니스 로드맵 제공</li>
             <li>✅ AI 기반 맞춤형 추천</li>
             <li>✅ 실전 사례 아카이브</li>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import clientPromise from '@/lib/mongodb';
+import { getUserId } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,6 +10,11 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const userId = getUserId();
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = await context.params;
     const client = await clientPromise;
     if (!client) {
@@ -33,6 +39,11 @@ export async function PUT(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const userId = getUserId();
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { id } = await context.params;
     const updates = await request.json();
 
@@ -42,6 +53,12 @@ export async function PUT(
     }
 
     const db = client.db("devminelab");
+    // 워크북 소유자 확인
+    const existingWorkbook = await db.collection('workbooks').findOne({ _id: new ObjectId(id) });
+    if (!existingWorkbook || existingWorkbook.userId !== userId) {
+      return NextResponse.json({ error: '수정 권한이 없습니다.' }, { status: 403 });
+    }
+
     const result = await db.collection('workbooks').findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: updates },

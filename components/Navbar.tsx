@@ -1,31 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, User as UserICon, LogIn, Briefcase, BookOpen, ClipboardList, FileText, Home, Layout, Lightbulb } from "lucide-react";
-import { User } from "@/types";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, signOut, isLoading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    async function fetchUser() {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    }
-
-    fetchUser();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
-      setUser(session?.user || null);
-    });
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const closeMobileMenu = () => setMobileMenuOpen(false);
@@ -65,72 +47,89 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* 로그인/마이페이지 버튼 */}
-        <div className="flex items-center">
-          {user ? (
-            <Link href="/mypage" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
+        {/* 로그인/마이페이지 버튼 - 모바일에서는 숨김 */}
+        <div className="hidden md:flex items-center">
+          {isLoading ? null : user ? (
+            <button
+              onClick={() => signOut()}
+              className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105"
+            >
               <UserICon className="h-4 w-4" />
-              Mypage
-            </Link>
+              로그아웃
+            </button>
           ) : (
             <Link href="/auth" className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105">
               <LogIn className="h-4 w-4" />
-              Login
+              로그인
             </Link>
           )}
         </div>
 
         {/* 모바일 메뉴 버튼 */}
-        <div className="flex md:hidden flex-1 justify-end">
-          <button onClick={toggleMobileMenu} className="inline-flex items-center justify-center rounded-md p-2 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800">
-            <span className="sr-only">메뉴 열기</span>
+        <div className="md:hidden">
+          <button onClick={toggleMobileMenu} className="p-2 text-gray-600">
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* 모바일 메뉴 */}
-      <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-lg transition-all duration-300 transform ${
-          mobileMenuOpen ? "opacity-100 scale-100 translate-x-0" : "opacity-0 scale-95 translate-x-full"
-        } md:hidden`}
-      >
+      {/* 모바일 메뉴 - 로그인 버튼을 메뉴 하단에 추가 */}
+      <div className={`fixed inset-y-0 right-0 z-50 w-64 bg-white transform ${
+        mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+      } transition-transform duration-200 ease-in-out md:hidden shadow-lg`}>
         <div className="flex flex-col h-full">
-          <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
-            <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">메뉴</h2>
-            <button onClick={closeMobileMenu} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+          <div className="flex justify-between items-center p-4 border-b">
+            <h2 className="text-lg font-bold">메뉴</h2>
+            <button onClick={closeMobileMenu} className="p-2">
               <X className="h-6 w-6" />
             </button>
           </div>
-          <nav className="flex flex-col p-4 space-y-4">
-            <Link href="/" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
+          
+          <nav className="flex-1 p-4 space-y-4">
+            <Link href="/" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md" onClick={closeMobileMenu}>
               <Home className="h-4 w-4" /> 홈
             </Link>
-            <Link href="/about" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
-              <Lightbulb className="h-4 w-4" /> 철학
+            <Link href="/about" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md" onClick={closeMobileMenu}>
+              <Lightbulb className="h-4 w-4" /> About
             </Link>
-            <Link href="/how-we-work" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
-              <ClipboardList className="h-4 w-4" /> 방법론
+            <Link href="/how-we-work" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md" onClick={closeMobileMenu}>
+              <ClipboardList className="h-4 w-4" /> Services
             </Link>
-            <Link href="/case-studies" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
-              <FileText className="h-4 w-4" /> 케이스 스터디
+            <Link href="/case-studies" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md" onClick={closeMobileMenu}>
+              <FileText className="h-4 w-4" /> Portfolio
             </Link>
-            <Link href="/blog" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
-              <BookOpen className="h-4 w-4" /> 블로그
+            <Link href="/blog" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md" onClick={closeMobileMenu}>
+              <BookOpen className="h-4 w-4" /> Blog
             </Link>
-            <Link href="/workbook" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
-              <Layout className="h-4 w-4" /> 워크북
+            <Link href="/contact" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md" onClick={closeMobileMenu}>
+              <Layout className="h-4 w-4" /> Contact
             </Link>
-            {user ? (
-              <Link href="/mypage" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
-                <UserICon className="h-4 w-4" /> 마이페이지
-              </Link>
+          </nav>
+
+          {/* 모바일 로그인 버튼 - 메뉴 하단에 고정 */}
+          <div className="p-4 border-t">
+            {isLoading ? null : user ? (
+              <button
+                onClick={() => {
+                  signOut();
+                  closeMobileMenu();
+                }}
+                className="flex items-center gap-2 justify-center w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white"
+              >
+                <UserICon className="h-4 w-4" />
+                로그아웃
+              </button>
             ) : (
-              <Link href="/auth" className="text-gray-900 dark:text-gray-100 hover:text-primary transition-colors flex items-center gap-1" onClick={closeMobileMenu}>
-                <LogIn className="h-4 w-4" /> 로그인
+              <Link
+                href="/auth"
+                className="flex items-center gap-2 justify-center w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white"
+                onClick={closeMobileMenu}
+              >
+                <LogIn className="h-4 w-4" />
+                로그인
               </Link>
             )}
-          </nav>
+          </div>
         </div>
       </div>
     </header>

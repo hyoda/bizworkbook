@@ -2,6 +2,7 @@
 
 import "./globals.css";
 import { ErrorProvider } from "@/context/ErrorContext";
+import { AuthProvider } from "@/context/AuthContext";
 import Navbar from "@/components/Navbar"; // ✅ Navbar 컴포넌트 추가
 import Head from "next/head";
 
@@ -16,8 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </Head>
       <body className="min-h-screen bg-background text-foreground">
         <ErrorProvider>
-          <Navbar /> {/* ✅ 네비게이션 포함 */}
-          <main className="flex-1">{children}</main>
+          <AuthProvider>
+            <Navbar /> {/* ✅ 네비게이션 포함 */}
+            <main className="flex-1">{children}</main>
+          </AuthProvider>
         </ErrorProvider>
         <footer className="border-t border-border/40 bg-background py-6 text-center">
           <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} devminelab. 모든 권리 보유.</p>

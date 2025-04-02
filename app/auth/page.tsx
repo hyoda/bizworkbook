@@ -12,9 +12,33 @@ export default function AuthPage() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+  const [sessionChecking, setSessionChecking] = useState(true);
   const [oauthLoading, setOauthLoading] = useState<"google" | "github" | "kakao" | null>(null);
   const [message, setMessage] = useState("");
   const router = useRouter();
+
+  // ✅ 초기 세션 체크
+  useEffect(() => {
+    async function checkSession() {
+      try {
+        console.log("🔍 세션 체크 시작");
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          console.log("✅ 이미 로그인된 상태 감지:", session.user);
+          const params = new URLSearchParams(window.location.search);
+          const redirectTo = params.get('from') || '/dashboard';
+          router.replace(redirectTo);
+        }
+      } catch (error) {
+        console.error("❌ 세션 체크 실패:", error);
+      } finally {
+        console.log("✅ 세션 체크 완료");
+        setSessionChecking(false);
+      }
+    }
+    checkSession();
+  }, [router]);
 
   // ✅ 인증 상태 변경 감지 (로그아웃 시 자동 이동)
   useEffect(() => {
@@ -108,6 +132,15 @@ export default function AuthPage() {
         router.push("/dashboard"); // ✅ OAuth 로그인 후 보장된 리디렉션 추가
       }, 1000);
     }
+  }
+
+  // 세션 체크 중이면 로딩 표시
+  if (sessionChecking) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="animate-spin h-8 w-8" />
+      </div>
+    );
   }
 
   return (

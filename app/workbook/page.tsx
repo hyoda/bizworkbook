@@ -4,8 +4,9 @@ import { useState } from 'react';
 import SearchFilter from '@/components/SearchFilter';
 import WorkbookList from '@/components/WorkbookList';
 import type { Workbook } from '@/types';
+import { withAuth } from '@/context/AuthContext';
 
-export default function WorkbookPage() {
+function WorkbookPage() {
   const [workbooks, setWorkbooks] = useState<Workbook[]>([]);
 
   return (
@@ -20,3 +21,5 @@ export default function WorkbookPage() {
     </div>
   );
 }
+
+export default withAuth(WorkbookPage);

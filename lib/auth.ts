@@ -1,14 +1,49 @@
-import { cookies } from 'next/headers';
 import { supabase } from '@/lib/supabase';
 
 export async function getUserId() {
-  const cookieStore = cookies();
-  const accessToken = (await cookieStore).get('sb-access-token')?.value;
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (error) {
+      console.error('Session check failed:', error);
+      return null;
+    }
 
-  if (!accessToken) return null;
+    return session?.user?.id || null;
+  } catch (error) {
+    console.error('Auth check failed:', error);
+    return null;
+  }
+}
 
-  const { data, error } = await supabase.auth.getUser(accessToken);
-  if (error || !data.user) return null;
+export async function checkAuth() {
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (error) {
+      console.error('Auth check failed:', error);
+      return false;
+    }
 
-  return data.user.id;
+    return !!session;
+  } catch (error) {
+    console.error('Auth check failed:', error);
+    return false;
+  }
+}
+
+export async function refreshSession() {
+  try {
+    const { data: { session }, error } = await supabase.auth.refreshSession();
+    
+    if (error) {
+      console.error('Session refresh failed:', error);
+      return null;
+    }
+
+    return session;
+  } catch (error) {
+    console.error('Session refresh failed:', error);
+    return null;
+  }
 }
