@@ -6,7 +6,7 @@ import { Menu, X, User as UserICon, LogIn, Briefcase, BookOpen, ClipboardList, F
 import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
-  const { user, signOut, isLoading } = useAuth();
+  const { user, signOut, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
@@ -49,7 +49,7 @@ export default function Navbar() {
 
         {/* 로그인/마이페이지 버튼 - 모바일에서는 숨김 */}
         <div className="hidden md:flex items-center">
-          {isLoading ? null : user ? (
+          {loading ? null : user ? (
             <button
               onClick={() => signOut()}
               className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark transition-transform hover:scale-105"
@@ -108,7 +108,7 @@ export default function Navbar() {
 
           {/* 모바일 로그인 버튼 - 메뉴 하단에 고정 */}
           <div className="p-4 border-t">
-            {isLoading ? null : user ? (
+            {loading ? null : user ? (
               <button
                 onClick={() => {
                   signOut();

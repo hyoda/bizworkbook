@@ -47,7 +47,7 @@ export async function getWorkbook(id: string, userId?: string) {
     throw new Error("워크북을 찾을 수 없습니다.");
   }
   
-  if (!isWorkbookAccessible(workbook, userId)) {
+  if (!isWorkbookAccessible(workbook as unknown as Workbook, userId || null)) {
     throw new Error("이 워크북에 대한 접근 권한이 없습니다.");
   }
   
