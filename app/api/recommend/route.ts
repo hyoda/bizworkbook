@@ -1,8 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 
-export async function POST(req: Request) {
-  const { id, tags } = await req.json();
+export const dynamic = 'force-dynamic';
+
+export async function POST(request: NextRequest) {
+  const { id, tags } = await request.json();
   const client = await clientPromise;
   if (!client) {
     return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });

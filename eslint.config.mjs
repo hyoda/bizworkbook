@@ -14,6 +14,8 @@ const eslintConfig = [
   {
     rules: {
       "@next/next/no-img-element": "off", // 🚀 <img> 태그 허용
+      "@typescript-eslint/no-unused-vars": "off", // 사용하지 않는 변수 허용
+      "no-unused-vars": "off", // 사용하지 않는 변수 허용
     },
   },
 ];

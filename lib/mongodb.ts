@@ -1,29 +1,33 @@
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI!;
+if (!process.env.MONGODB_URI) {
+  throw new Error('Please add your Mongo URI to .env.local');
+}
+
+const uri = process.env.MONGODB_URI;
 const options = {};
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient> | undefined = undefined;
+let client;
+let clientPromise: Promise<MongoClient>;
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace NodeJS {
-    interface Global {
-      _mongoClientPromise: Promise<MongoClient> | undefined;
-    }
+if (process.env.NODE_ENV === 'development') {
+  // In development mode, use a global variable so that the value
+  // is preserved across module reloads caused by HMR (Hot Module Replacement).
+  const globalWithMongo = global as typeof globalThis & {
+    _mongoClientPromise?: Promise<MongoClient>;
+  };
+
+  if (!globalWithMongo._mongoClientPromise) {
+    client = new MongoClient(uri, options);
+    globalWithMongo._mongoClientPromise = client.connect();
   }
-}
-
-if (!(global as unknown as NodeJS.Global)._mongoClientPromise) {
+  clientPromise = globalWithMongo._mongoClientPromise;
+} else {
+  // In production mode, it's best to not use a global variable.
   client = new MongoClient(uri, options);
-  (global as unknown as NodeJS.Global)._mongoClientPromise = client.connect();
+  clientPromise = client.connect();
 }
 
-const globalClientPromise = (global as unknown as NodeJS.Global)._mongoClientPromise;
-if (!globalClientPromise) {
-  throw new Error('MongoClient promise is undefined');
-}
-clientPromise = globalClientPromise;
-
+// Export a module-scoped MongoClient promise. By doing this in a
+// separate module, the client can be shared across functions.
 export default clientPromise;
