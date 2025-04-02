@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mongodb:
     image: mongodb/mongodb-community-server:latest
@@ -10,11 +12,11 @@ services:
       - mongodb_config:/data/configdb
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     environment:
-      MONGO_INITDB_ROOT_USERNAME: devminelab-app
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-      MONGO_INITDB_DATABASE: devminelab-db
+      MONGODB_INITDB_ROOT_USERNAME: devminelab-app
+      MONGODB_INITDB_ROOT_PASSWORD: Uqis1cetaAeHIAMA
+      MONGODB_INITDB_DATABASE: devminelab-db
       MONGODB_ENABLE_NUMACTL: "true"
-    command: ["mongod", "--auth", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
+    command: ["mongod", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -29,21 +31,11 @@ services:
         reservations:
           memory: 1G
           cpus: '1'
-    networks:
-      - app-network
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
-
-networks:
-  app-network:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.20.0.0/16
 
 volumes:
   mongodb_data:
