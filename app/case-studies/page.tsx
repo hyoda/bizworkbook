@@ -18,6 +18,7 @@ interface CaseStudy {
   slug: string;
   category: string;
   image?: string;
+  videoUrl?: string;
 }
 
 const caseStudies: CaseStudy[] = [
@@ -293,6 +294,58 @@ const caseStudies: CaseStudy[] = [
   }
 ];
 
+const featuredCases = [
+  {
+    id: "coupang-auto",
+    title: "쿠팡 Wing 상품 등록 자동화",
+    description: "Puppeteer를 활용한 상품 등록 프로세스 자동화",
+    videoUrl: "PXGjLKk73n4",
+    date: "2024-03-04",
+    readTime: "10분",
+    tags: ["Puppeteer", "Node.js", "Automation", "TypeScript"],
+    slug: "coupang-auto",
+    category: "Automation",
+    highlights: [
+      "상품 등록 시간 90% 단축",
+      "인적 오류 95% 감소",
+      "대량 상품 처리 가능",
+      "안정적인 자동화 시스템 구축"
+    ]
+  },
+  {
+    id: "nextjs-oauth",
+    title: "Next.js OAuth 인증 시스템",
+    description: "Supabase 기반 다중 OAuth 인증 및 RBAC 구현",
+    date: "2024-03-06",
+    readTime: "8분",
+    tags: ["Next.js", "Supabase", "OAuth", "RBAC", "TypeScript"],
+    slug: "nextjs-oauth",
+    category: "Frontend",
+    highlights: [
+      "다중 OAuth 제공자 통합",
+      "세분화된 접근 제어",
+      "보안 강화",
+      "사용자 경험 개선"
+    ]
+  },
+  {
+    id: "web-billing",
+    title: "웹 빌링 시스템",
+    description: "RevenueCat과 Stripe를 활용한 구독 결제 시스템",
+    date: "2024-03-05",
+    readTime: "15분",
+    tags: ["RevenueCat", "Stripe", "Payment", "API", "TypeScript"],
+    slug: "web-billing",
+    category: "Payment",
+    highlights: [
+      "자동화된 결제 처리",
+      "실시간 매출 분석",
+      "효율적인 구독 관리",
+      "안전한 결제 처리"
+    ]
+  }
+];
+
 const categories = Array.from(new Set(caseStudies.map(study => study.category)));
 
 export default function CaseStudies() {
@@ -314,6 +367,74 @@ export default function CaseStudies() {
           <p className="mt-4 text-lg max-w-2xl leading-relaxed mx-auto">
             다양한 기술 스택과 도메인에서의 프로젝트 개발 경험을 공유합니다.
           </p>
+        </div>
+      </section>
+
+      {/* Featured Cases */}
+      <section className="max-w-7xl mx-auto py-16 px-6">
+        <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">주요 프로젝트</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {featuredCases.map((featured) => (
+            <Card key={featured.id} className="group hover:shadow-lg transition-all duration-300">
+              {featured.videoUrl && (
+                <div className="relative pt-[56.25%] w-full overflow-hidden">
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-t-lg"
+                    src={`https://www.youtube.com/embed/${featured.videoUrl}?si=vG5GNjDJWAd2xPXO`}
+                    title={featured.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <CardTitle className="text-xl">{featured.title}</CardTitle>
+                  <span className="text-sm text-muted-foreground bg-primary/10 px-2 py-1 rounded-full">
+                    {featured.category}
+                  </span>
+                </div>
+                <CardDescription>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                    {featured.date && <span>{featured.date}</span>}
+                    {featured.date && featured.readTime && <span>•</span>}
+                    {featured.readTime && <span>{featured.readTime} 읽기</span>}
+                  </div>
+                  <p className="text-muted-foreground mb-6">{featured.description}</p>
+                  {featured.tags && featured.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {featured.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <h3 className="font-semibold">주요 성과</h3>
+                  <ul className="space-y-2">
+                    {featured.highlights.map((highlight, index) => (
+                      <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <Button asChild variant="ghost" className="w-full mt-6 group">
+                  <Link href={`/case-studies/${featured.slug}`}>
+                    자세히 보기
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
 

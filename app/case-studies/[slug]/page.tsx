@@ -25,6 +25,7 @@ interface CaseStudy {
   category: string;
   image?: string;
   content?: string;
+  videoUrl?: string;
 }
 
 const caseStudies: CaseStudy[] = [
@@ -729,6 +730,7 @@ RevenueCat과 Stripe를 활용하여 안정적이고 확장 가능한 구독 결
     tags: ["Puppeteer", "Node.js", "Automation", "TypeScript"],
     slug: "coupang-auto",
     category: "Automation",
+    videoUrl: "PXGjLKk73n4",  // 비디오 URL 추가
     content: `
 # 쿠팡 Wing 상품 등록 자동화
 
@@ -2423,6 +2425,25 @@ export default function CaseStudy() {
           </div>
         </div>
       </section>
+
+      {/* Video Section */}
+      {study.videoUrl && (
+        <section className="container mx-auto px-4 -mt-12 mb-12 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="relative pt-[56.25%] w-full overflow-hidden rounded-lg shadow-2xl">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${study.videoUrl}?si=vG5GNjDJWAd2xPXO`}
+                title={study.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Content Section */}
       <section className="container mx-auto px-4 py-12">
