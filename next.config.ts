@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['www.hyoda.kr', 'hyoda.devmine.co.kr'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -10,6 +9,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'hyoda.devmine.co.kr',
+      },
+      {
+        protocol: 'https',
+        hostname: 'devminelab.hyoda.kr',
       }
     ],
     unoptimized: true,  // 이미지 최적화 비활성화
