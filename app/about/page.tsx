@@ -82,6 +82,8 @@ export default function AboutPage() {
                 width={800}
                 height={450}
                 priority
+                unoptimized
+                loading="eager"
                 style={{ width: '100%', height: 'auto' }}
                 className="object-cover"
               />
