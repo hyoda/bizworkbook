@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 // import SearchFilter from "@/components/SearchFilter";
 // import WorkbookList from "@/components/WorkbookList";
@@ -65,7 +66,7 @@ export default function Home() {
           🚀 실행 중심의 비즈니스 자동화, devminelab
         </h1>
         <p className="mt-4 text-lg max-w-2xl leading-relaxed">
-          단순한 이론이 아닌, 실전에서 검증된 자동화 시스템을 제공합니다. <br/> 
+          단순한 이론이 아닌, 실전에서 검증된 자동화 시스템을 제공합니다. <br />
           단계별 로드맵과 AI 기반 도구로 비즈니스 실행을 가속화하세요.
         </p>
         <Button asChild size="lg" className="mt-6">
@@ -75,9 +76,12 @@ export default function Home() {
 
       {/* 주요 철학 소개 */}
       <section className="max-w-5xl mx-auto py-16 px-6">
-        <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-center mb-12">📌 우리는 이렇게 일합니다</h2>
+        <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-center mb-12">
+          📌 우리는 이렇게 일합니다
+        </h2>
         <p className="mt-6 text-lg  text-muted-foreground">
-          반복적인 업무를 최소화하고, 검증된 마케팅 퍼널과 자동화 시스템을 통해 비즈니스를 성장시킵니다.
+          반복적인 업무를 최소화하고, 검증된 마케팅 퍼널과 자동화 시스템을 통해
+          비즈니스를 성장시킵니다.
         </p>
         <ul className="list-disc pl-6 text-lg space-y-2 text-muted-foreground mt-4">
           <li>✅ 실행 가능한 비즈니스 자동화 솔루션 제공</li>
@@ -86,7 +90,6 @@ export default function Home() {
           <li>✅ 커뮤니티 기반 피드백 & 지속적인 개선</li>
         </ul>
       </section>
-
 
       {/* Use Cases Section */}
       <section className="py-16 md:py-24 bg-muted">
@@ -110,11 +113,12 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* 주요 기능 소개 */}
       <section className="max-w-5xl mx-auto py-16 px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
         <div className="space-y-6">
-          <h2 className="text-3xl font-bold tracking-tighter">📌 devminelab이 특별한 이유</h2>
+          <h2 className="text-3xl font-bold tracking-tighter">
+            📌 devminelab이 특별한 이유
+          </h2>
           <ul className="list-disc pl-6 text-lg space-y-2 text-muted-foreground">
             <li>✅ 단계별 비즈니스 로드맵 제공</li>
             <li>✅ AI 기반 맞춤형 추천</li>
@@ -127,17 +131,22 @@ export default function Home() {
           </ul>
         </div>
         <div className="flex justify-center">
-          <img src="/features.webp" alt="Features" className="rounded-lg shadow-lg max-h-[300px] object-cover" />
+          <Image
+            src="/features.webp"
+            alt="Features"
+            width={800}
+            height={300}
+            className="rounded-lg shadow-lg object-cover"
+          />
         </div>
       </section>
-
-
-
 
       {/* 실전 사례 하이라이트 */}
       <section className="bg-muted py-16">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center tracking-tight mb-10">📖 실전 사례 하이라이트</h2>
+          <h2 className="text-3xl font-bold text-center tracking-tight mb-10">
+            📖 실전 사례 하이라이트
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
@@ -171,7 +180,9 @@ export default function Home() {
 
       {/* 인터랙티브 워크북 */}
       <section className="max-w-5xl mx-auto py-16 px-6 text-center">
-        <h2 className="text-3xl font-bold tracking-tight">📂 비즈니스 실행을 위한 워크북</h2>
+        <h2 className="text-3xl font-bold tracking-tight">
+          📂 비즈니스 실행을 위한 워크북
+        </h2>
         <p className="mt-6 text-lg text-muted-foreground">
           당신만의 맞춤형 워크북을 생성하고 실행하세요!
         </p>
@@ -179,8 +190,6 @@ export default function Home() {
           <Link href="/workbook">내 워크북 만들기</Link>
         </Button>
       </section>
-
-
 
       {/* 사용자 리뷰 */}
       {/* <section className="bg-muted py-16">
@@ -217,36 +226,72 @@ export default function Home() {
           <Card className="shadow-lg">
             <CardHeader>
               <CardTitle>실시간 비즈니스 대시보드</CardTitle>
-              <CardDescription>최근 6개월 매출, 비용, 고객 수 추이</CardDescription>
+              <CardDescription>
+                최근 6개월 매출, 비용, 고객 수 추이
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div className="bg-primary/10 p-4 rounded-lg">
                   <h3 className="text-sm font-medium text-primary">총 매출</h3>
                   <p className="text-2xl font-bold">₩1.4억</p>
-                  <p className="text-sm text-muted-foreground">전년 대비 +45%</p>
+                  <p className="text-sm text-muted-foreground">
+                    전년 대비 +45%
+                  </p>
                 </div>
                 <div className="bg-primary/10 p-4 rounded-lg">
-                  <h3 className="text-sm font-medium text-primary">총 고객수</h3>
+                  <h3 className="text-sm font-medium text-primary">
+                    총 고객수
+                  </h3>
                   <p className="text-2xl font-bold">1,230명</p>
-                  <p className="text-sm text-muted-foreground">전년 대비 +62%</p>
+                  <p className="text-sm text-muted-foreground">
+                    전년 대비 +62%
+                  </p>
                 </div>
                 <div className="bg-primary/10 p-4 rounded-lg">
-                  <h3 className="text-sm font-medium text-primary">평균 구매금액</h3>
+                  <h3 className="text-sm font-medium text-primary">
+                    평균 구매금액
+                  </h3>
                   <p className="text-2xl font-bold">₩113,821</p>
-                  <p className="text-sm text-muted-foreground">전년 대비 +15%</p>
+                  <p className="text-sm text-muted-foreground">
+                    전년 대비 +15%
+                  </p>
                 </div>
               </div>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={data} margin={{ left: 30 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
-                  <YAxis yAxisId="left" tickFormatter={(value) => value.toLocaleString()}/>
-                  <YAxis yAxisId="right" orientation="right" tickFormatter={(value) => value.toLocaleString()}/>
+                  <YAxis
+                    yAxisId="left"
+                    tickFormatter={(value) => value.toLocaleString()}
+                  />
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    tickFormatter={(value) => value.toLocaleString()}
+                  />
                   <RechartsTooltip />
-                  <Bar yAxisId="left" dataKey="매출" fill="rgba(29, 78, 216, 0.7)" radius={[4, 4, 0, 0]} />
-                  <Bar yAxisId="left" dataKey="비용" fill="rgba(232, 144, 97, 0.7)" radius={[4, 4, 0, 0]} />
-                  <Line yAxisId="right" type="monotone" dataKey="고객수" stroke="rgba(16, 185, 129, 0.7)" strokeWidth={2} dot={{ fill: "rgba(16, 185, 129, 0.7)" }} />
+                  <Bar
+                    yAxisId="left"
+                    dataKey="매출"
+                    fill="rgba(29, 78, 216, 0.7)"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <Bar
+                    yAxisId="left"
+                    dataKey="비용"
+                    fill="rgba(232, 144, 97, 0.7)"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="고객수"
+                    stroke="rgba(16, 185, 129, 0.7)"
+                    strokeWidth={2}
+                    dot={{ fill: "rgba(16, 185, 129, 0.7)" }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -256,9 +301,15 @@ export default function Home() {
 
       {/* CTA - 시작하기 */}
       <section className="text-center py-20 bg-primary text-primary-foreground">
-        <h2 className="text-3xl font-bold">🚀 비즈니스를 실행으로 옮길 준비가 되었나요?</h2>
+        <h2 className="text-3xl font-bold">
+          🚀 비즈니스를 실행으로 옮길 준비가 되었나요?
+        </h2>
         <p className="mt-4 text-lg">지금 바로 시작하세요!</p>
-        <Button asChild size="lg" className="mt-6 bg-white text-primary shadow-md hover:bg-gray-200">
+        <Button
+          asChild
+          size="lg"
+          className="mt-6 bg-white text-primary shadow-md hover:bg-gray-200"
+        >
           <Link href="/workbook">무료 체험하기</Link>
         </Button>
       </section>
