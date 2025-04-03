@@ -23,7 +23,7 @@ export default function HowWeWork() {
         <p className="mt-6 text-lg text-center text-muted-foreground">
           실행 가능하도록 정리된 프로세스를 통해 비즈니스를 빠르게 구축하고 최적화합니다.
         </p>
-        <ul className="list-disc pl-6 text-lg space-y-2 text-muted-foreground mt-4">
+        <ul className="pl-8 text-lg space-y-2 text-muted-foreground mt-4">
           <li>✅ 아이디어 검증 & 고객 피드백 수집</li>
           <li>✅ 마케팅 퍼널 구축 & 트래픽 확보</li>
           <li>✅ 자동화 시스템을 통한 운영 최적화</li>
