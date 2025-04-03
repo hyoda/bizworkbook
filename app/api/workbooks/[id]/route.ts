@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
-import clientPromise from '@/lib/mongodb';
+import { connectToDatabase } from '@/lib/mongodb';
+import mongoose from 'mongoose';
 import { getUserId } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -16,11 +17,7 @@ export async function GET(
     }
 
     const { id } = await context.params;
-    const client = await clientPromise;
-    if (!client) {
-      return NextResponse.json({ error: '데이터베이스 클라이언트를 가져올 수 없습니다.' }, { status: 500 });
-    }
-    const db = client.db("devminelab");
+    const db = await connectToDatabase();
     const workbook = await db.collection('workbooks').findOne({ _id: new ObjectId(id) });
 
     if (!workbook) {
@@ -29,7 +26,7 @@ export async function GET(
 
     return NextResponse.json(workbook);
   } catch (error) {
-    console.error('🚨 워크북 조회 오류:', error);
+    console.error('워크북 조회 오류:', error);
     return NextResponse.json({ error: '서버 오류' }, { status: 500 });
   }
 }
@@ -47,12 +44,8 @@ export async function PUT(
     const { id } = await context.params;
     const updates = await request.json();
 
-    const client = await clientPromise;
-    if (!client) {
-      return NextResponse.json({ error: '데이터베이스 클라이언트를 가져올 수 없습니다.' }, { status: 500 });
-    }
-
-    const db = client.db("devminelab");
+    const db = await connectToDatabase();
+    
     // 워크북 소유자 확인
     const existingWorkbook = await db.collection('workbooks').findOne({ _id: new ObjectId(id) });
     if (!existingWorkbook || existingWorkbook.userId !== userId) {
@@ -71,7 +64,7 @@ export async function PUT(
 
     return NextResponse.json(result);
   } catch (error) {
-    console.error('🚨 워크북 업데이트 오류:', error);
+    console.error('워크북 업데이트 오류:', error);
     return NextResponse.json({ error: '서버 오류' }, { status: 500 });
   }
 }

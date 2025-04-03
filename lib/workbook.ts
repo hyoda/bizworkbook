@@ -1,5 +1,5 @@
-import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { connectToDatabase } from './mongodb';
 
 interface Workbook {
   _id: string;
@@ -20,11 +20,7 @@ export function isWorkbookAccessible(workbook: Workbook, userId: string | null):
 }
 
 export async function getWorkbooks(userId?: string) {
-  const client = await clientPromise;
-  if (!client) {
-    throw new Error("Database connection failed");
-  }
-  const db = client.db("devminelab");
+  const db = await connectToDatabase();
   
   // 공개 워크북 또는 사용자의 워크북만 조회
   const query = userId 
@@ -35,12 +31,8 @@ export async function getWorkbooks(userId?: string) {
 }
 
 export async function getWorkbook(id: string, userId?: string) {
-  const client = await clientPromise;
-  if (!client) {
-    throw new Error("Database connection failed");
-  }
+  const db = await connectToDatabase();
   
-  const db = client.db("devminelab");
   const workbook = await db.collection('workbooks').findOne({ _id: new ObjectId(id) });
   
   if (!workbook) {
@@ -61,12 +53,8 @@ export async function createWorkbook(
   userId: string,
   isPublic: boolean = false
 ) {
-  const client = await clientPromise;
-  if (!client) {
-    throw new Error("Database connection failed");
-  }
+  const db = await connectToDatabase();
   
-  const db = client.db("devminelab");
   return db.collection('workbooks').insertOne({
     title,
     description,
@@ -83,12 +71,8 @@ export async function updateWorkbook(
   userId: string,
   updates: Partial<Omit<Workbook, '_id' | 'userId' | 'createdAt'>>
 ) {
-  const client = await clientPromise;
-  if (!client) {
-    throw new Error("Database connection failed");
-  }
+  const db = await connectToDatabase();
   
-  const db = client.db("devminelab");
   const workbook = await getWorkbook(id, userId);
   
   if (workbook.userId !== userId) {
@@ -107,12 +91,8 @@ export async function updateWorkbook(
 }
 
 export async function deleteWorkbook(id: string, userId: string) {
-  const client = await clientPromise;
-  if (!client) {
-    throw new Error("Database connection failed");
-  }
+  const db = await connectToDatabase();
   
-  const db = client.db("devminelab");
   const workbook = await getWorkbook(id, userId);
   
   if (workbook.userId !== userId) {

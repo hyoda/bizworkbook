@@ -1,33 +1,62 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Please add your Mongo URI to .env.local');
+type MongooseCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
+
+declare global {
+  // eslint-disable-next-line no-var
+  var mongoose: MongooseCache;
 }
 
-const uri = process.env.MONGODB_URI;
-const options = {};
+const MONGODB_URI = process.env.MONGODB_URI;
 
-let client;
-let clientPromise: Promise<MongoClient>;
+if (!MONGODB_URI) {
+  throw new Error('MONGODB_URI is not defined');
+}
 
-if (process.env.NODE_ENV === 'development') {
-  // In development mode, use a global variable so that the value
-  // is preserved across module reloads caused by HMR (Hot Module Replacement).
-  const globalWithMongo = global as typeof globalThis & {
-    _mongoClientPromise?: Promise<MongoClient>;
-  };
+let cached = global.mongoose;
 
-  if (!globalWithMongo._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    globalWithMongo._mongoClientPromise = client.connect();
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+export async function connectToDatabase() {
+  if (cached.conn) {
+    if (!mongoose.connection.db) {
+      throw new Error("Database connection not established");
+    }
+    return mongoose.connection.db;
   }
-  clientPromise = globalWithMongo._mongoClientPromise;
-} else {
-  // In production mode, it's best to not use a global variable.
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URI!, opts);
+  }
+
+  try {
+    cached.conn = await cached.promise;
+    if (!mongoose.connection.db) {
+      throw new Error('Database connection not established');
+    }
+    return mongoose.connection.db;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
 }
 
-// Export a module-scoped MongoClient promise. By doing this in a
-// separate module, the client can be shared across functions.
-export default clientPromise;
+// MongoDB 필터 타입 정의
+export type FilterValue = string | number | boolean | Date | RegExp | { $regex: string; $options: string };
+export type FilterCondition = {
+  [key: string]: FilterValue | Array<FilterValue> | { [key: string]: FilterValue };
+};
+
+export type MongoDBFilter = FilterCondition & {
+  $or?: Array<FilterCondition>;
+  $and?: Array<FilterCondition>;
+};
